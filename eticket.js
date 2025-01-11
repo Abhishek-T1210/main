@@ -107,9 +107,24 @@ function openETicketWindow(source, destination, fare, passengerCount) {
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
                 }
                 .screenshot-button:hover {
                     background-color: #304d6d;
+                    transform: scale(1.05);
+                }
+                .screenshot-button:active {
+                    transform: scale(0.95);
+                }
+                .screenshot-loader {
+                    display: none;
+                    width: 25px;
+                    height: 25px;
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid #fff;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin-left: 10px;
                 }
             </style>
         </head>
@@ -133,7 +148,10 @@ function openETicketWindow(source, destination, fare, passengerCount) {
                     Total Fare: ₹${fare}
                 </div>
                 <div class="qr-container" id="qrCode"></div>
-                <button class="screenshot-button" id="screenshotButton">Take Screenshot</button>
+                <button class="screenshot-button" id="screenshotButton">
+                    Take Screenshot
+                    <div class="screenshot-loader" id="screenshotLoader"></div>
+                </button>
             </div>
         </body>
         </html>
@@ -170,15 +188,22 @@ function openETicketWindow(source, destination, fare, passengerCount) {
 
         // Implement screenshot functionality
         const screenshotButton = ticketWindow.document.getElementById("screenshotButton");
+        const screenshotLoader = ticketWindow.document.getElementById("screenshotLoader");
+
         screenshotButton.addEventListener("click", () => {
+            screenshotLoader.style.display = "inline-block"; // Show loader during screenshot
             html2canvas(ticketContainer).then(canvas => {
                 const dataUrl = canvas.toDataURL();
                 const link = document.createElement("a");
                 link.href = dataUrl;
                 link.download = 'e-ticket.png';
                 link.click();
+                screenshotLoader.style.display = "none"; // Hide loader after screenshot is taken
+            }).catch(error => {
+                console.error("Screenshot error:", error);
+                screenshotLoader.style.display = "none"; // Hide loader on error
             });
         });
 
-    }, 3000);  // 2 seconds delay for generating ticket
+    }, 3000);  // 3 seconds delay for generating ticket
 }
