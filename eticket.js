@@ -192,17 +192,21 @@ function openETicketWindow(source, destination, fare, passengerCount) {
 
         screenshotButton.addEventListener("click", () => {
             screenshotLoader.style.display = "inline-block"; // Show loader during screenshot
-            html2canvas(ticketContainer).then(canvas => {
-                const dataUrl = canvas.toDataURL();
-                const link = document.createElement("a");
-                link.href = dataUrl;
-                link.download = 'e-ticket.png';
-                link.click();
-                screenshotLoader.style.display = "none"; // Hide loader after screenshot is taken
-            }).catch(error => {
-                console.error("Screenshot error:", error);
-                screenshotLoader.style.display = "none"; // Hide loader on error
-            });
+
+            // Wait for the ticket content to be fully rendered
+            setTimeout(() => {
+                html2canvas(ticketWindow.document.body).then(canvas => { // Capture the whole screen
+                    const dataUrl = canvas.toDataURL();
+                    const link = document.createElement("a");
+                    link.href = dataUrl;
+                    link.download = 'e-ticket.png';
+                    link.click();
+                    screenshotLoader.style.display = "none"; // Hide loader after screenshot is taken
+                }).catch(error => {
+                    console.error("Screenshot error:", error);
+                    screenshotLoader.style.display = "none"; // Hide loader on error
+                });
+            }, 500); // Delay slightly to ensure all content is rendered
         });
 
     }, 3000);  // 3 seconds delay for generating ticket
