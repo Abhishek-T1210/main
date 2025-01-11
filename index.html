@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reliance Metro</title>
-    <link rel="icon" type="image/png" href="Reliance.png">
+    <link rel="icon" type="image/png" href="./media/Reliance.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -247,7 +247,7 @@
     <div class="main-container">
         <div class="form-section">
             <h2>
-                <img src="Reliance.png" alt="Reliance Metro Logo"> Reliance Metro
+                <img src="./media/Reliance.png" alt="Reliance Metro Logo"> Reliance Metro
             </h2>
             <!-- Wallet Section -->
             <div class="wallet-section">
@@ -306,14 +306,14 @@
                 <button class="wallet-button" id="walletButton" onclick="handleWalletPayment()" disabled>
                     <i class="fas fa-wallet button-icon"></i> Pay via Wallet
                 </button>
-                <button class="upi-button" id="upiButton" onclick="handleUPIPayment()" disabled>
+                <button class="upi-button" id="upiButton" onclick="handleUPIPayment()">
                     <i class="fab fa-google-pay button-icon"></i> Pay via UPI
                 </button>
             </div>
         </div>
 
         <div class="image-section">
-            <img src="metro.jpeg" alt="Metro Image">
+            <img src="./media/metro.jpeg" alt="Metro Image">
         </div>
     </div>
 
@@ -428,6 +428,23 @@
                 }
             }
         }
+
+        function handleUPIPayment() {
+    const upiId = "tiwaribahi420-2@okaxis"; 
+    const name = "Reliance Metro"; 
+    const fareNote = document.getElementById("fareNote").textContent;
+    const fareMatch = fareNote.match(/₹(\d+)/);
+    const fare = fareMatch ? parseInt(fareMatch[1]) : 0;
+
+    if (fare > 0) {
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${fare}&cu=INR`;
+
+        window.location.href = upiUrl;
+    } else {
+        alert("Invalid fare amount. Please check your selections.");
+    }
+}
+
 
         function handleWalletPayment() {
             const source = document.getElementById("source").value;
