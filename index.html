@@ -6,6 +6,8 @@
     <title>Reliance Metro</title>
     <link rel="icon" type="image/png" href="./media/Reliance.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="eticket.js"></script>
     <style>
         .main{
             font-family: 'Poppins', sans-serif;
@@ -184,7 +186,6 @@
 
         .wallet-button {
             background: #d32f2f;
-            height: 72%;
         }
 
         .wallet-button:hover {
@@ -310,7 +311,7 @@
 
     .form-section h2 {
         margin-top: 6%;
-        font-size: 1.6rem; /* Adjusted font size for better readability */
+        font-size: 1.6rem;
     }
 
     
@@ -396,9 +397,8 @@
     <div class="image-sectionmob">
         <img src="./media/mobmetro.jpg" alt="Metro Image">
     </div>
-    </div>
-   
-    
+     </div>
+       
 
     <script>
         let passengerCount = 1;
@@ -419,12 +419,11 @@
         function addToWallet() {
             const addAmount = document.getElementById("addAmount").value;
             const amount = parseInt(addAmount);
-           removeSourceError();
+            removeSourceError();
             if (amount > 0) {
                 walletBalance += amount;
                 document.getElementById("walletBalance").textContent = walletBalance;
                 document.getElementById("addAmount").value = "";
-                alert(`₹${amount} added to your wallet!`);
                 validateSelections();
             } else {
                 alert("Please enter a valid amount!");
@@ -460,6 +459,7 @@
             sourceElement.classList.remove("error");
             document.getElementById("error-message").textContent = "";
         }
+
 
         function updateDestinationOptions() {
             const source = document.getElementById("source").value;
@@ -513,43 +513,68 @@
         }
 
         function handleUPIPayment() {
-    const upiId = "tiwaribahi420-2@okaxis"; 
-    const name = "Reliance Metro"; 
-
-    const fareNote = document.getElementById("fareNote").textContent;
-    const fareMatch = fareNote.match(/₹(\d+)/); 
-    const fare = fareMatch ? parseInt(fareMatch[1]) : 0;
+        const source = document.getElementById("source").value;
+       const destination = document.getElementById("destination").value;
+       const fare = fareMap[source][destination] * passengerCount;
 
     if (fare > 0) {
-        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${fare}&cu=INR&tn=${encodeURIComponent(
-            "Metro Ticket Payment"
-        )}`;
+        alert("UPI Payment Successful!");
 
-        window.location.href = upiUrl;
+        openETicketWindow(source, destination, fare, passengerCount);
     } else {
         alert("Invalid fare amount. Please check your selections.");
     }
 }
 
+function handleWalletPayment() {
+    const source = document.getElementById("source").value;
+    const destination = document.getElementById("destination").value;
+    const fare = fareMap[source][destination] * passengerCount;
 
+    if (walletBalance >= fare) {
+        walletBalance -= fare;
+        document.getElementById("walletBalance").textContent = walletBalance;
+        alert("Payment successful via Wallet!");
 
-        function handleWalletPayment() {
-            const source = document.getElementById("source").value;
-            const destination = document.getElementById("destination").value;
-            const fare = fareMap[source][destination] * passengerCount;
+        // Open the E-Ticket window
+        openETicketWindow(source, destination, fare, passengerCount);
+    } else {
+        alert("Insufficient wallet balance!");
+    }
+}
 
-            if (walletBalance >= fare) {
-                walletBalance -= fare;
-                document.getElementById("walletBalance").textContent = walletBalance;
-                alert("Payment successful via Wallet!");
-            } else {
-                alert("Insufficient wallet balance!");
+  function fetchStationData() {
+            // Get all options for source station
+            const sourceOptions = document.getElementById("source").options;
+
+            // Extract station data from source
+            let sourceStations = [];
+            for (let option of sourceOptions) {
+                if (option.value) {  // Ensure the option has a value
+                    sourceStations.push({ station: option.text, value: option.value });
+                }
             }
+
+            // Get all options for destination station
+            const destinationOptions = document.getElementById("destination").options;
+
+            // Extract station data from destination
+            let destinationStations = [];
+            for (let option of destinationOptions) {
+                if (option.value) {  // Ensure the option has a value
+                    destinationStations.push({ station: option.text, value: option.value });
+                }
+            }
+
+            console.log("Source Stations:", sourceStations);
+            console.log("Destination Stations:", destinationStations);
         }
 
-        function handleUPIPayment() {
-            alert("Payment successful via UPI!");
-        }
+        // Call the function when needed (e.g., when the page loads or when a specific event occurs)
+        window.onload = function() {
+            fetchStationData(); // Automatically fetch station data when the page loads
+        };
     </script>
+
 </body>
 </html>
