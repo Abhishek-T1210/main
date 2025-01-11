@@ -7,16 +7,18 @@
     <link rel="icon" type="image/png" href="./media/Reliance.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
+        .main{
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 191vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2%;
         }
 
         .main-container {
@@ -142,18 +144,20 @@
             border: 2px solid #dddddd;
             border-radius: 8px;
             width: 150px;
-            margin-right: 10px;
+            margin-right: 8%;
         }
 
         .wallet-section button {
             padding: 10px 15px;
-            background: #388e3c;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
+    background: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 3%;
+    margin-left: -5%;
         }
 
         .pay-buttons {
@@ -180,6 +184,7 @@
 
         .wallet-button {
             background: #d32f2f;
+            height: 72%;
         }
 
         .wallet-button:hover {
@@ -193,6 +198,7 @@
 
         .upi-button {
             background: #388e3c;
+            height: 72%;
         }
 
         .upi-button:hover {
@@ -234,17 +240,68 @@
             margin-right: 10px;
         }
 
+             .image-sectionmob
+            {
+              display: none;   
+            }
+
         @media (max-width:786px)
         {
             .image-section{
                 display: none;
             }
+
+            .image-sectionmob
+            {
+                width: 100%;
+                height: auto;
+                display: block;
+                background-color: transparent;
+                box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+                border-radius: 39px;
+                }
+
+            .image-sectionmob img
+            {
+             width: 100%;
+             border-radius: 10px;
+             height: 100%;
+            }
+
+            .main-container
+            {
+                display: flex;
+                flex-direction: column;
+                height: 90%;
+            }
+
+            .form-section {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #333333;
+        }
+
+        .form-section h2 {
+            margin-top: -24%;
+        }
+
+        .main{
+           height: 185vh;
+           margin-top: 10%;
+        }
+
+
+
         }
 
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <div class="main">
+      <div class="main-container">
         <div class="form-section">
             <h2>
                 <img src="./media/Reliance.png" alt="Reliance Metro Logo"> Reliance Metro
@@ -314,8 +371,14 @@
 
         <div class="image-section">
             <img src="./media/metro.jpeg" alt="Metro Image">
-        </div>
+        </div>  
     </div>
+    <div class="image-sectionmob">
+        <img src="./media/mobmetro.jpg" alt="Metro Image">
+    </div>
+    </div>
+   
+    
 
     <script>
         let passengerCount = 1;
@@ -432,18 +495,22 @@
         function handleUPIPayment() {
     const upiId = "tiwaribahi420-2@okaxis"; 
     const name = "Reliance Metro"; 
+
     const fareNote = document.getElementById("fareNote").textContent;
-    const fareMatch = fareNote.match(/₹(\d+)/);
+    const fareMatch = fareNote.match(/₹(\d+)/); 
     const fare = fareMatch ? parseInt(fareMatch[1]) : 0;
 
     if (fare > 0) {
-        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${fare}&cu=INR`;
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${fare}&cu=INR&tn=${encodeURIComponent(
+            "Metro Ticket Payment"
+        )}`;
 
         window.location.href = upiUrl;
     } else {
         alert("Invalid fare amount. Please check your selections.");
     }
 }
+
 
 
         function handleWalletPayment() {
