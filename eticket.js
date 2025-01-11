@@ -134,19 +134,6 @@ function openETicketWindow(source, destination, fare, passengerCount) {
                 <div class="loader-message">Generating your E-Ticket...</div>
             </div>
             <div class="ticket-container" id="ticketContainer">
-                <div class="header">E-Ticket</div>
-                <div class="journey-info">
-                    <span>Ticket Number:</span> Ticket-${Math.floor(Math.random() * 1000000)}
-                </div>
-                <div class="journey-info">
-                    <span>Journey:</span> ${source} to ${destination}
-                </div>
-                <div class="journey-info">
-                    <span>Passengers:</span> ${passengerCount}
-                </div>
-                <div class="fare">
-                    Total Fare: ₹${fare}
-                </div>
                 <div class="qr-container" id="qrCode"></div>
                 <button class="screenshot-button" id="screenshotButton">
                     Take Screenshot
