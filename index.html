@@ -539,9 +539,7 @@ function handleWalletPayment() {
     if (walletBalance >= fare) {
         walletBalance -= fare;
         document.getElementById("walletBalance").textContent = walletBalance;
-        alert("Payment successful via Wallet!");
 
-        // Open the E-Ticket window
         openETicketWindow(source, destination, fare, passengerCount);
     } else {
         alert("Insufficient wallet balance!");

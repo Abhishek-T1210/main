@@ -93,23 +93,20 @@ function openETicketWindow(source, destination, fare, passengerCount) {
     `);
 
     setTimeout(() => {
-        // Define the journey details dynamically from user input
         const journeyDetails = {
             ticketNumber: `Ticket-${Math.floor(Math.random() * 1000000)}`,
             passengers: passengerCount,
             fare: fare
         };
 
-        // Convert the journey details to a JSON string (to encode in the QR code)
         const journeyData = JSON.stringify(journeyDetails);
 
-        // Generate QR code with the journey details
         const qrCodeContainer = ticketWindow.document.getElementById("qrCode");
 
         new QRCode(qrCodeContainer, {
-            text: journeyData, // Encodes the journey details as a JSON string
+            text: journeyData, 
             width: 150,
             height: 150,
         });
-    }, 2000);  // 2 seconds delay for generating ticket
+    }, 0);  
 }
