@@ -386,7 +386,7 @@
             <div id="fareNote" class="fare-note"></div>
 
             <div class="pay-buttons">
-                <button class="wallet-button" id="walletButton" onclick="handleWalletPayment()" disabled>
+                <button class="wallet-button" id="walletButton" onclick="handleWalletPayment()">
                     <i class="fas fa-wallet button-icon"></i> Pay via Wallet
                 </button>
                 <button class="upi-button" id="upiButton" onclick="handleUPIPayment()">
@@ -465,6 +465,10 @@
             document.getElementById("error-message").textContent = "";
         }
 
+        function openTicketPage() {
+        window.location.href = "ticket.html";
+        }
+
 
         function updateDestinationOptions() {
             const source = document.getElementById("source").value;
@@ -518,13 +522,13 @@
         }
 
         function handleUPIPayment() {
-        const source = document.getElementById("source").value;
-       const destination = document.getElementById("destination").value;
-       const fare = fareMap[source][destination] * passengerCount;
+    const source = document.getElementById("source").value;
+    const destination = document.getElementById("destination").value;
+    const fare = fareMap[source][destination] * passengerCount;
 
     if (fare > 0) {
-
-        openETicketWindow(source, destination, fare, passengerCount);
+        // Redirect to ticket.html after successful payment
+        window.location.href = "ticket.html";
     } else {
         alert("Invalid fare amount. Please check your selections.");
     }
@@ -538,32 +542,28 @@ function handleWalletPayment() {
     if (walletBalance >= fare) {
         walletBalance -= fare;
         document.getElementById("walletBalance").textContent = walletBalance;
-
-        openETicketWindow(source, destination, fare, passengerCount);
+        // Redirect to ticket.html after successful payment
+        window.location.href = "ticket.html";
     } else {
         alert("Insufficient wallet balance!");
     }
 }
 
   function fetchStationData() {
-            // Get all options for source station
             const sourceOptions = document.getElementById("source").options;
 
-            // Extract station data from source
             let sourceStations = [];
             for (let option of sourceOptions) {
-                if (option.value) {  // Ensure the option has a value
+                if (option.value) {  
                     sourceStations.push({ station: option.text, value: option.value });
                 }
             }
 
-            // Get all options for destination station
             const destinationOptions = document.getElementById("destination").options;
 
-            // Extract station data from destination
             let destinationStations = [];
             for (let option of destinationOptions) {
-                if (option.value) {  // Ensure the option has a value
+                if (option.value) {  
                     destinationStations.push({ station: option.text, value: option.value });
                 }
             }
@@ -572,9 +572,8 @@ function handleWalletPayment() {
             console.log("Destination Stations:", destinationStations);
         }
 
-        // Call the function when needed (e.g., when the page loads or when a specific event occurs)
         window.onload = function() {
-            fetchStationData(); // Automatically fetch station data when the page loads
+            fetchStationData(); 
         };
     </script>
 

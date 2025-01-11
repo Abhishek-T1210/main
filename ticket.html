@@ -1,114 +1,104 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>E-Ticket</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> <!-- Add html2canvas -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-         <style>
-            body {
-                font-family: 'Poppins', sans-serif;
-                margin: 0;
-                background: #ffffff;
-                color: #fcfbfb;
-             
-                height: 100vh;
-                padding: 0;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliance One</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: #ffffff;
+            color: #fcfbfb;
+            height: 100vh;
+            padding: 0;
+        }
 
-            .ticket {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 30px;
-                width: 100%;
-                height: 100%;
-            }
+        .ticket {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+        }
 
-            .header_name
-            {
-                height: 10%;
-                width: 90%;
-                border: none;
-                margin-bottom: 3%;
-                box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
-                display: flex;
-                justify-items: center;
-                justify-content: space-between;
-                align-items: center;
-                padding-left: 2%;
-                padding-right: 3%;
+        .header_name {
+            height: 10%;
+            width: 90%;
+            border: none;
+            margin-bottom: 3%;
+            box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 2%;
+            padding-right: 3%;
+        }
 
-            }
+        .header_name h2 {
+            color: #000000;
+        }
 
-            .header_name h2
-            {
-                color: #000000;
+        .headerx {
+            width: 95%;
+            height: 23%;
+            border: 0px;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 3%;
+            box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
+            border-radius: 10px;
+        }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            width: 50%;
+            height: 100%;
+            border-right: 2px solid rgb(201, 201, 201);
+        }
 
-            }
+        .logo img {
+            background: transparent;
+            height: 100%;
+            width: 90%;
+            object-fit: contain;
+        }
 
-            .headerx
-            {               
-                width: 95%;
-                height: 23%;
-                border: 0px;
-                display: flex;
-                flex-direction: row;
-                margin-bottom: 3%;
-                box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
+        .heder_text {
+            width: 50%;
+            height: 100%;
+            font-size: 0.7em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
 
-            }
+        .heder_text h2 {
+            font-size: 2em;
+            object-fit: contain;
+        }
 
-            .logo
-            {
-                background: transparent;
-                width: 50%;
-                height: 100%;
-                border-right: 2px solid  rgb(201, 201, 201);
-           }
+        .center_content {
+            height: 60%;
+            width: 95%;
+            box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 2%;
+        }
 
-            .logo img
-            {
-                background: transparent;
-                height: 100%;
-                width: 100%;
-                object-fit: contain;
-                border: none;
-            }
-
-            .heder_text
-            {
-                width: 50%;
-                height: 100%;
-                font-size: .7em;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: #333;
-            }
-
-            .heder_text h2
-            {
-               font-size: 2em;
-               object-fit: contain;
-            }
-
-            .center_content
-            {
-                height: 60%;
-                width: 95%;
-                box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-                gap: 2%;
-
-            }
-
-        .qr_name
-        {
+        .qr_name {
             border: none;
             font-weight: bolder;
             width: 100%;
@@ -119,59 +109,62 @@
             color: rgb(255, 255, 255);
             font-size: 1em;
             background-color: #5680fd;
-
+            box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
         }
-            .loader-container {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-                width: 100%;
-                box-shadow:  1px 3px 1px rgb(201, 201, 201);
+
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            box-shadow: 1px 3px 1px rgb(201, 201, 201);
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e3c72;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
             }
 
-            .loader {
-                border: 4px solid #f3f3f3;
-                border-top: 4px solid #1e3c72;
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                animation: spin 1s linear infinite;
-                margin-bottom: 20px;
-                
+            100% {
+                transform: rotate(360deg);
             }
+        }
 
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
+        .loader-message {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: bold;
+        }
 
-            .loader-message {
-                font-size: 1.2rem;
-                color: #333;
-                font-weight: bold;
-            }
+        .qr {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            box-shadow: 1px 3px 1px rgb(201, 201, 201);
+        }
 
-            .qr{
-                display: none;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-                width: 100%;
-                box-shadow:  1px 3px 1px rgb(201, 201, 201);
-            }
-
-        .bottom_button
-        {
+        .bottom_button {
             width: 95%;
             margin-top: 3%;
             height: 7%;
         }
 
-        .bottom_button button
-        {
+        .bottom_button button {
             width: 100%;
             height: 100%;
             background-color: #33cc0d;
@@ -180,52 +173,91 @@
             font-size: 1em;
             border: none;
             border-radius: 5px;
-            box-shadow:  1px 1px 1px rgb(201, 201, 201);
+            box-shadow: 1px 1px 3px 1px rgb(201, 201, 201);
             cursor: pointer;
         }
 
-        .bottom-para
-        {
+        .bottom-para {
             color: black;
             margin-top: 4%;
             font-size: 13px;
             font-style: normal;
         }
 
-                     
-        </style>
-    </head>
-    <body>
-        <div class="ticket">
+        @media (max-width: 600px) {
+            .ticket {
+                padding: 10px;
+            }
 
-            <div class="header_name">
-                <button onclick="window.location.href='https://onemetroticket.netlify.app/'" style="border: none; background-color: transparent; cursor: pointer;"><i style="font-size: 40px; color: #000000;" class="fa">&#xf104;</i></button>
-                <h2>Mumbai Metro One</h2>
-               <button style="border: none; background-color: transparent; cursor: pointer;"><i   class="fa fa-bars" style="color: #000000 ;font-size: 24px; "></i></button>
+            .header_name h2 {
+                font-size: 1.2em;
+            }
+
+            .heder_text h2 {
+                font-size: 1.5em;
+            }
+
+            .qr_name {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="header_name">
+            <button onclick="window.location.href='https://onemetroticket.netlify.app/'" aria-label="Back to Home"
+                style="border: none; background-color: transparent; cursor: pointer;">
+                <i style="font-size: 40px; color: #000000;" class="fa">&#xf104;</i>
+            </button>
+            <h2>Mumbai Metro One</h2>
+            <button style="border: none; background-color: transparent; cursor: pointer;">
+                <i class="fa fa-bars" style="color: #000000; font-size: 24px;"></i>
+            </button>
+        </div>
+
+        <div class="headerx">
+            <div class="logo">
+                <img src="./media/Reliance.png" alt="Reliance Metro Logo">
             </div>
-
-            <div class="headerx">
-             <div class="logo"><img src="./media/Reliance.png" alt=""></div>
-             <div class="heder_text"><h2>Reliance Metro</h2></div>
+            <div class="heder_text">
+                <h2>Reliance Metro</h2>
             </div>
+        </div>
 
-            <div class="center_content">
-                <div class="qr_name"> Qr Ticket</div>
-                <div class="loader-container">
+        <div class="center_content">
+            <div class="qr_name">Qr Ticket</div>
+            <div class="loader-container">
                 <div class="loader"></div>
                 <div class="loader-message">Generating E-Ticket...</div>
             </div>
             <div class="qr"></div>
-            </div>
-
-            <div class="bottom_button">
-                <button>View Details</button>                 
-            </div>
-            
-            <footer class="bottom-para">
-                For any ticket related issue contact <a href="" style="text-decoration: none;""><span>Reliance help desk.</span></a>
-            </footer>
-            
         </div>
-    </body>
+
+        <div class="bottom_button">
+            <button>View Details</button>
+        </div>
+
+        <footer class="bottom-para">
+            For any ticket-related issue contact <a href="#" style="text-decoration: none;"><span>Reliance help desk.</span></a>
+        </footer>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelector('.loader-container').style.display = 'none';
+            const qrContainer = document.querySelector('.qr');
+            qrContainer.style.display = 'flex';
+            new QRCode(qrContainer, {
+                text: "Your e-ticket info here",
+                width: 200,
+                height: 200,
+            });
+        }, 2000);
+
+        document.querySelector('.bottom_button button').addEventListener('click', () => {
+            alert('Your ticket details will be displayed here.');
+        });
+    </script>
+</body>
 </html>
