@@ -2,12 +2,13 @@ function openETicketWindow(source, destination, fare, passengerCount) {
     // Open a new window
     const ticketWindow = window.open("", "_blank", "width=600,height=800");
 
-    // Add initial loader
+    // Add initial loader and ticket HTML content
     ticketWindow.document.write(`
         <html lang="en">
         <head>
             <title>E-Ticket</title>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> <!-- Add html2canvas -->
             <style>
                 body {
                     font-family: 'Poppins', sans-serif;
@@ -98,6 +99,18 @@ function openETicketWindow(source, destination, fare, passengerCount) {
                 .qr-container img {
                     border-radius: 10px;
                 }
+                .screenshot-button {
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    background-color: #1e3c72;
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+                .screenshot-button:hover {
+                    background-color: #304d6d;
+                }
             </style>
         </head>
         <body>
@@ -120,6 +133,7 @@ function openETicketWindow(source, destination, fare, passengerCount) {
                     Total Fare: ₹${fare}
                 </div>
                 <div class="qr-container" id="qrCode"></div>
+                <button class="screenshot-button" id="screenshotButton">Take Screenshot</button>
             </div>
         </body>
         </html>
@@ -153,5 +167,18 @@ function openETicketWindow(source, destination, fare, passengerCount) {
             width: 150,
             height: 150,
         });
-    }, 2000);  // 2 seconds delay for generating ticket
+
+        // Implement screenshot functionality
+        const screenshotButton = ticketWindow.document.getElementById("screenshotButton");
+        screenshotButton.addEventListener("click", () => {
+            html2canvas(ticketContainer).then(canvas => {
+                const dataUrl = canvas.toDataURL();
+                const link = document.createElement("a");
+                link.href = dataUrl;
+                link.download = 'e-ticket.png';
+                link.click();
+            });
+        });
+
+    }, 3000);  // 2 seconds delay for generating ticket
 }
